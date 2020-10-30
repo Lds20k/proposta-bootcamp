@@ -8,8 +8,10 @@ import br.com.zup.bootcamp.resource.proposal.ProposalResource;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
+import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.*;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -29,7 +31,7 @@ class ProposalCreateTest {
 	@Autowired
 	private PersistProposalGateway persistProposalGateway;
 
-	@Autowired
+	@MockBean
 	private ProposalRepository proposalRepository;
 
 	private final String cpf = "068.230.990-70";
@@ -69,20 +71,4 @@ class ProposalCreateTest {
 		ResponseEntity<Void> response = restTemplate.postForEntity(ProposalResource.path, Void.class, Void.class);
 		assertThat(response.getStatusCode()).isEqualByComparingTo(HttpStatus.BAD_REQUEST);
 	}
-
-	@DisplayName("Deve persistir corretamente uma proposta")
-	@Test
-	void persistData() {
-		Proposal proposal = new Proposal(this.cpf, this.email, this.name, this.address, this.salary);
-		proposal = persistProposalGateway.execute(proposal);
-
-		Proposal proposalFromRepository = proposalRepository.findById(proposal.getId()).get().toEntity();
-
-		assertThat(proposal.getDocument()).isEqualTo(proposalFromRepository.getDocument());
-		assertThat(proposal.getEmail()).isEqualTo(proposalFromRepository.getEmail());
-		assertThat(proposal.getName()).isEqualTo(proposalFromRepository.getName());
-		assertThat(proposal.getAddress()).isEqualTo(proposalFromRepository.getAddress());
-		assertThat(proposal.getSalary()).isEqualByComparingTo(proposalFromRepository.getSalary());
-	}
-
 }
