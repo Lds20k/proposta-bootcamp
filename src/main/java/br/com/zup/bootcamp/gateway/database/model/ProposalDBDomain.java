@@ -23,7 +23,7 @@ public class ProposalDBDomain {
 
     @NotBlank
     @CPFOrCNPJ
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String document;
 
     @NotBlank

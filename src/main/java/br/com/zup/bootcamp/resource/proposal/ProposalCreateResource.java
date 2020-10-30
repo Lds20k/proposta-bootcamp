@@ -11,8 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
-// Carga intrínseca = 4/7
+// Carga intrínseca = 5/7
 @RestController
 public class ProposalCreateResource extends ProposalResource {
 
@@ -27,11 +28,14 @@ public class ProposalCreateResource extends ProposalResource {
      */
     @PostMapping
     public ResponseEntity<?> create(@Valid @RequestBody ProposalCreateRequest request, UriComponentsBuilder builder){
-        Proposal proposal = createProposalUseCase.execute(request.toModel());
+        Optional<Proposal> proposal = createProposalUseCase.execute(request.toModel());
+
+        if(proposal.isEmpty()) return ResponseEntity.unprocessableEntity().build();
+
         return ResponseEntity.created(
                 builder
                         .path(path.concat("/{id}"))
-                        .buildAndExpand(proposal.getId())
+                        .buildAndExpand(proposal.get().getId())
                         .toUri()
         ).build();
     }

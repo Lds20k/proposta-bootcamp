@@ -2,11 +2,14 @@ package br.com.zup.bootcamp.usecase;
 
 import br.com.zup.bootcamp.entity.Proposal;
 import br.com.zup.bootcamp.gateway.AnalyzeGateway;
+import br.com.zup.bootcamp.gateway.ProposalDocumentAllReadyPersistedGateway;
 import br.com.zup.bootcamp.gateway.PersistProposalGateway;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-// Carga intrínseca = 3/9
+import java.util.Optional;
+
+// Carga intrínseca = 5/9
 @Service
 public class CreateProposalUseCase {
 
@@ -16,15 +19,20 @@ public class CreateProposalUseCase {
     @Autowired
     private PersistProposalGateway persistProposalGateway;
 
+    @Autowired
+    private ProposalDocumentAllReadyPersistedGateway proposalDocumentAllReadyPersistedGateway;
+
     /**
      * Persiste e analisa uma proposta
      * @param proposal Objeto que representa a proposta a ser criada
      * @return Objeto que representa a proposta salva no banco de dados
      */
-    public Proposal execute(Proposal proposal){
+    public Optional<Proposal> execute(Proposal proposal){
+        if(proposalDocumentAllReadyPersistedGateway.execute(proposal)) return Optional.empty();
+
         Proposal ProcessedProposal = persistProposalGateway.execute(proposal);
         //analyzeGateway.execute(ProcessedProposal);
-        return ProcessedProposal;
+        return Optional.of(ProcessedProposal);
     }
 
 }
