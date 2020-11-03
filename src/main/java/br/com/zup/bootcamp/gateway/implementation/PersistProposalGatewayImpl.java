@@ -24,11 +24,13 @@ public class PersistProposalGatewayImpl implements PersistProposalGateway {
     @Override
     public Proposal execute(Proposal proposal) {
         ProposalDBDomain proposalDBDomain = new ProposalDBDomain(
+                proposal.getId(),
                 proposal.getDocument(),
                 proposal.getEmail(),
                 proposal.getName(),
                 proposal.getAddress(),
-                proposal.getSalary()
+                proposal.getSalary(),
+                proposal.getEligibility()
         );
         repository.save(proposalDBDomain);
         return proposalDBDomain.toEntity();

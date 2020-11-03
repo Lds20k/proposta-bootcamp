@@ -1,5 +1,7 @@
 package br.com.zup.bootcamp.gateway.dto;
 
+import br.com.zup.bootcamp.enumerate.Eligibility;
+
 // Carga intrínseca = 0/7
 public class AnalyzeResponse {
     private final String documento;
@@ -15,6 +17,11 @@ public class AnalyzeResponse {
         this.nome = nome;
         this.resultadoSolicitacao = resultadoSolicitacao;
         this.idProposta = idProposta;
+    }
+
+    public static AnalyzeResponse convertFromString(String content) {
+        String aux[] = content.split("\"");
+        return new AnalyzeResponse(aux[3], aux[7], aux[11], aux[15]);
     }
 
     public String getDocumento() {
@@ -41,5 +48,11 @@ public class AnalyzeResponse {
                 ", resultadoSolicitacao='" + resultadoSolicitacao + '\'' +
                 ", idProposta='" + idProposta + '\'' +
                 '}';
+    }
+
+    public Eligibility getResultadoSolicitacaoConverted() {
+        if (this.resultadoSolicitacao.equals("SEM_RESTRICAO"))
+            return Eligibility.ELEGIVEL;
+        return Eligibility.NAO_ELEGIVEL;
     }
 }

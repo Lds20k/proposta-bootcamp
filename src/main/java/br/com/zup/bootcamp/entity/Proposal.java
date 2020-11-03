@@ -1,5 +1,6 @@
 package br.com.zup.bootcamp.entity;
 
+import br.com.zup.bootcamp.enumerate.Eligibility;
 import br.com.zup.bootcamp.resource.validator.annotation.CPFOrCNPJ;
 
 import javax.validation.constraints.Email;
@@ -31,6 +32,9 @@ public class Proposal {
     @Positive
     private final BigDecimal salary;
 
+    @NotBlank
+    private final Eligibility eligibility;
+
     public Proposal(@NotBlank String document, @NotBlank @Email String email, @NotBlank String name, @NotBlank String address, @NotNull @Positive BigDecimal salary) {
         this.id = null;
         this.document = document;
@@ -38,15 +42,17 @@ public class Proposal {
         this.name = name;
         this.address = address;
         this.salary = salary;
+        this.eligibility = Eligibility.PENDENTE;
     }
 
-    public Proposal(String id, @NotBlank String document, @NotBlank @Email String email, @NotBlank String name, @NotBlank String address, @NotNull @Positive BigDecimal salary) {
+    public Proposal(String id, @NotBlank String document, @NotBlank @Email String email, @NotBlank String name, @NotBlank String address, @NotNull @Positive BigDecimal salary, @NotBlank Eligibility eligibility) {
         this.id = id;
         this.document = document;
         this.email = email;
         this.name = name;
         this.address = address;
         this.salary = salary;
+        this.eligibility = eligibility;
     }
 
     public String getId() {
@@ -71,5 +77,9 @@ public class Proposal {
 
     public BigDecimal getSalary() {
         return salary;
+    }
+
+    public Eligibility getEligibility() {
+        return eligibility;
     }
 }

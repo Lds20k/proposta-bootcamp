@@ -1,6 +1,7 @@
 package br.com.zup.bootcamp.gateway.database.model;
 
 import br.com.zup.bootcamp.entity.Proposal;
+import br.com.zup.bootcamp.enumerate.Eligibility;
 import br.com.zup.bootcamp.resource.validator.annotation.CPFOrCNPJ;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -44,28 +45,34 @@ public class ProposalDBDomain {
     @Column(nullable = false)
     private BigDecimal salary;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Eligibility eligibility;
+
     @Deprecated
     public ProposalDBDomain() {
     }
 
-    public ProposalDBDomain(@NotBlank String document, @NotBlank @Email String email, @NotBlank String name, @NotBlank String address, @NotNull @Positive BigDecimal salary) {
+    public ProposalDBDomain(@NotBlank String document, @NotBlank @Email String email, @NotBlank String name, @NotBlank String address, @NotNull @Positive BigDecimal salary, @NotBlank Eligibility eligibility) {
         this.document = document;
         this.email = email;
         this.name = name;
         this.address = address;
         this.salary = salary;
+        this.eligibility = eligibility;
     }
 
-    public ProposalDBDomain(String id, @NotBlank String document, @NotBlank @Email String email, @NotBlank String name, @NotBlank String address, @NotNull @Positive BigDecimal salary) {
+    public ProposalDBDomain(String id, @NotBlank String document, @NotBlank @Email String email, @NotBlank String name, @NotBlank String address, @NotNull @Positive BigDecimal salary, @NotBlank Eligibility eligibility) {
         this.id = id;
         this.document = document;
         this.email = email;
         this.name = name;
         this.address = address;
         this.salary = salary;
+        this.eligibility = eligibility;
     }
 
     public Proposal toEntity() {
-        return new Proposal(this.id, this.document, this.email, this.name, this.address, this.salary);
+        return new Proposal(this.id, this.document, this.email, this.name, this.address, this.salary, this.eligibility);
     }
 }

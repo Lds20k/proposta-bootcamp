@@ -1,5 +1,6 @@
 package br.com.zup.bootcamp;
 
+import br.com.zup.bootcamp.enumerate.Eligibility;
 import br.com.zup.bootcamp.gateway.database.model.ProposalDBDomain;
 import br.com.zup.bootcamp.gateway.database.repository.ProposalRepository;
 import br.com.zup.bootcamp.resource.dto.request.ProposalCreateRequest;
@@ -37,6 +38,7 @@ class ProposalCreateTest {
 	private final String name = "João";
 	private final String address = "Rua b";
 	private final BigDecimal salary = new BigDecimal(100.00);
+	private final Eligibility eligibility = Eligibility.PENDENTE;
 
 	@DisplayName("Deve aceitar uma requisição valida")
 	@Test
@@ -76,7 +78,8 @@ class ProposalCreateTest {
 				this.email,
 				this.name,
 				this.address,
-				this.salary
+				this.salary,
+				this.eligibility
 		);
 
 		BDDMockito.when(proposalRepository.findByDocument(this.cpf)).thenReturn(Optional.of(proposalDBDomain));

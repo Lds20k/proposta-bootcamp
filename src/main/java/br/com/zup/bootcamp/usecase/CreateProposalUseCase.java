@@ -30,9 +30,9 @@ public class CreateProposalUseCase {
     public Optional<Proposal> execute(Proposal proposal){
         if(proposalDocumentAllReadyPersistedGateway.execute(proposal)) return Optional.empty();
 
-        Proposal ProcessedProposal = persistProposalGateway.execute(proposal);
-        //analyzeGateway.execute(ProcessedProposal);
-        return Optional.of(ProcessedProposal);
+        Proposal processedProposal = persistProposalGateway.execute(proposal);
+        Proposal proposalToReturn = persistProposalGateway.execute(analyzeGateway.execute(processedProposal));
+        return Optional.of(proposalToReturn);
     }
 
 }
