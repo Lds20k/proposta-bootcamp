@@ -14,3 +14,7 @@ spring:
 
 analise:
   url: http://localhost:9999
+
+management:
+  endpoint:
+    health: true
