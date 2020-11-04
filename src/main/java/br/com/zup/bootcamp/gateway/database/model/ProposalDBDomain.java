@@ -49,6 +49,9 @@ public class ProposalDBDomain {
     @Column(nullable = false)
     private Eligibility eligibility;
 
+    @Column(unique = true)
+    private String card;
+
     @Deprecated
     public ProposalDBDomain() {
     }
@@ -72,11 +75,37 @@ public class ProposalDBDomain {
         this.eligibility = eligibility;
     }
 
+    public ProposalDBDomain(String id, @NotBlank String document, @NotBlank @Email String email, @NotBlank String name, @NotBlank String address, @NotNull @Positive BigDecimal salary, Eligibility eligibility, String card) {
+        this.id = id;
+        this.document = document;
+        this.email = email;
+        this.name = name;
+        this.address = address;
+        this.salary = salary;
+        this.eligibility = eligibility;
+        this.card = card;
+    }
+
     public Proposal toEntity() {
         return new Proposal(this.id, this.document, this.email, this.name, this.address, this.salary, this.eligibility);
     }
 
     public String getId() {
         return id;
+    }
+
+    public void setCard(String card) {
+        this.card = card;
+    }
+
+    public void setEligibility(Eligibility eligibility) {
+        this.eligibility = eligibility;
+    }
+
+    @Override
+    public String toString() {
+        return "ProposalDBDomain{" +
+                "id='" + id + '\'' +
+                '}';
     }
 }

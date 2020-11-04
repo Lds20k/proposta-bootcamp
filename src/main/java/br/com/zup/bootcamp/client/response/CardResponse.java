@@ -12,7 +12,7 @@ public class CardResponse {
 
     private final String titular;
 
-    private final Collection<BlockedResponse> bloqueios;
+    private final Collection<BlockResponse> bloqueios;
 
     private final Collection<WarningResponse> avisos;
 
@@ -28,7 +28,7 @@ public class CardResponse {
 
     private final String idProposta;
 
-    public CardResponse(String id, LocalDateTime emitidoEm, String titular, Collection<BlockedResponse> bloqueios, Collection<WarningResponse> avisos, Collection<WalletResponse> carteiras, Collection<PortionResponse> parcelas, BigDecimal limite, Collection<RenegotiationResponse> renegociacao, DueDateResponse vencimento, String idProposta) {
+    public CardResponse(String id, LocalDateTime emitidoEm, String titular, Collection<BlockResponse> bloqueios, Collection<WarningResponse> avisos, Collection<WalletResponse> carteiras, Collection<PortionResponse> parcelas, BigDecimal limite, Collection<RenegotiationResponse> renegociacao, DueDateResponse vencimento, String idProposta) {
         this.id = id;
         this.emitidoEm = emitidoEm;
         this.titular = titular;
@@ -57,5 +57,9 @@ public class CardResponse {
                 ", vencimento=" + vencimento +
                 ", idProposta='" + idProposta + '\'' +
                 '}';
+    }
+
+    public String getId() {
+        return id;
     }
 }

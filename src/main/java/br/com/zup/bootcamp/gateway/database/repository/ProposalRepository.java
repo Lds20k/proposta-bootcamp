@@ -10,5 +10,5 @@ import java.util.Optional;
 public interface ProposalRepository extends CrudRepository<ProposalDBDomain, String> {
     Optional<ProposalDBDomain> findByDocument(String document);
 
-    Iterable<ProposalDBDomain> findAllByEligibility(Eligibility eligibility);
+    Iterable<ProposalDBDomain> findAllByEligibilityAndCardIsNull(Eligibility eligibility);
 }
