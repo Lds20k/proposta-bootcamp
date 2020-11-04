@@ -1,6 +1,6 @@
 package br.com.zup.bootcamp.client;
 
-import br.com.zup.bootcamp.gateway.dto.AnalyzeResponse;
+import br.com.zup.bootcamp.client.response.AnalyzeResponse;
 import feign.Headers;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;

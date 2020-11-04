@@ -1,4 +1,4 @@
-package br.com.zup.bootcamp.gateway.dto;
+package br.com.zup.bootcamp.client.response;
 
 import br.com.zup.bootcamp.enumerate.Eligibility;
 

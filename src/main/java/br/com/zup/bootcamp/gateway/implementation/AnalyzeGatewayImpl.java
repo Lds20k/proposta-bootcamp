@@ -3,7 +3,7 @@ package br.com.zup.bootcamp.gateway.implementation;
 import br.com.zup.bootcamp.client.AnalyzeClient;
 import br.com.zup.bootcamp.entity.Proposal;
 import br.com.zup.bootcamp.gateway.AnalyzeGateway;
-import br.com.zup.bootcamp.gateway.dto.AnalyzeResponse;
+import br.com.zup.bootcamp.client.response.AnalyzeResponse;
 import feign.FeignException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
