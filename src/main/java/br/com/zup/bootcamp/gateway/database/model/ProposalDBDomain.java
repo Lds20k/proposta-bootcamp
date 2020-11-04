@@ -75,4 +75,8 @@ public class ProposalDBDomain {
     public Proposal toEntity() {
         return new Proposal(this.id, this.document, this.email, this.name, this.address, this.salary, this.eligibility);
     }
+
+    public String getId() {
+        return id;
+    }
 }

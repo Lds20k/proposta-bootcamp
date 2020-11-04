@@ -13,7 +13,13 @@ spring:
       dialect: org.hibernate.dialect.MySQL5Dialect
 
 analise:
-  url: http://localhost:9999
+  url: ${ANALISE_URL:http://localhost:9999}
+
+cartao:
+  url: ${CARTAO_URL:http://localhost:8888}
+
+period:
+  execute: ${PERIOD:1000}
 
 management:
   endpoint:
