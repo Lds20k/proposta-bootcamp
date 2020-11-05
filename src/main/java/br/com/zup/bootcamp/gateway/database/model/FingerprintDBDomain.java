@@ -6,6 +6,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 
 // Carga intrínseca = 2/7
 @Entity
@@ -21,6 +22,9 @@ public class FingerprintDBDomain {
     @Column(nullable = false, length = 10000)
     private String fingerprintBase64;
 
+    @Column(nullable = false)
+    private LocalDate addedDate;
+
     @NotNull
     @ManyToOne
     @JoinColumn(referencedColumnName = "id", nullable = false)
@@ -34,9 +38,10 @@ public class FingerprintDBDomain {
         this.id = id;
         this.fingerprintBase64 = fingerprintBase64;
         this.proposal = proposal;
+        this.addedDate = LocalDate.now();
     }
 
     public Fingerprint toEntity() {
-        return new Fingerprint(this.id, this.fingerprintBase64, this.proposal.toEntity());
+        return new Fingerprint(this.id, this.fingerprintBase64, this.addedDate, this.proposal.toEntity());
     }
 }
