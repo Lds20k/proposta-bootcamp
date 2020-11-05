@@ -11,8 +11,10 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collection;
 
-// Carga intrínseca = 1/7
+// Carga intrínseca = 2/7
 @Entity
 @Table(name = "proposal")
 public class ProposalDBDomain {
@@ -52,17 +54,15 @@ public class ProposalDBDomain {
     @Column(unique = true)
     private String card;
 
+    @OneToMany(mappedBy = "proposal", cascade = CascadeType.ALL)
+    private Collection<FingerprintDBDomain> fingerprints = new ArrayList<>();
+
     @Deprecated
     public ProposalDBDomain() {
     }
 
-    public ProposalDBDomain(@NotBlank String document, @NotBlank @Email String email, @NotBlank String name, @NotBlank String address, @NotNull @Positive BigDecimal salary, @NotBlank Eligibility eligibility) {
-        this.document = document;
-        this.email = email;
-        this.name = name;
-        this.address = address;
-        this.salary = salary;
-        this.eligibility = eligibility;
+    public ProposalDBDomain(String id) {
+        this.id = id;
     }
 
     public ProposalDBDomain(String id, @NotBlank String document, @NotBlank @Email String email, @NotBlank String name, @NotBlank String address, @NotNull @Positive BigDecimal salary, @NotBlank Eligibility eligibility) {
@@ -75,19 +75,17 @@ public class ProposalDBDomain {
         this.eligibility = eligibility;
     }
 
-    public ProposalDBDomain(String id, @NotBlank String document, @NotBlank @Email String email, @NotBlank String name, @NotBlank String address, @NotNull @Positive BigDecimal salary, Eligibility eligibility, String card) {
-        this.id = id;
-        this.document = document;
-        this.email = email;
-        this.name = name;
-        this.address = address;
-        this.salary = salary;
-        this.eligibility = eligibility;
-        this.card = card;
-    }
-
     public Proposal toEntity() {
-        return new Proposal(this.id, this.document, this.email, this.name, this.address, this.salary, this.eligibility);
+        return new Proposal(
+                this.id,
+                this.document,
+                this.email,
+                this.name,
+                this.address,
+                this.salary,
+                this.eligibility,
+                this.card
+        );
     }
 
     public String getId() {
@@ -100,6 +98,10 @@ public class ProposalDBDomain {
 
     public void setEligibility(Eligibility eligibility) {
         this.eligibility = eligibility;
+    }
+
+    public void addFingerPrint(FingerprintDBDomain fingerPrint){
+        this.fingerprints.add(fingerPrint);
     }
 
     @Override

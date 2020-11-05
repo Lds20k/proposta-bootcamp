@@ -1,13 +1,13 @@
 package br.com.zup.bootcamp.resource.validator.annotation;
 
-import br.com.zup.bootcamp.resource.validator.CPFOrCNPJValidator;
+import br.com.zup.bootcamp.resource.validator.StringInBase64Validator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
 import java.lang.annotation.*;
 
 /**
- * O valor do elemento anotado precisa estar estritamente no formato de CPF ou CNPJ
+ * O valor do elemento precisa estar estritamente em Base64
  * <p>
  *     Tipos suportados
  * </p>
@@ -19,9 +19,9 @@ import java.lang.annotation.*;
 @Documented
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = CPFOrCNPJValidator.class)
-public @interface CPFOrCNPJ {
-    String message() default "br.com.zup.bootcamp.resource.validator.annotation.CPFOrCNPJ";
+@Constraint(validatedBy = StringInBase64Validator.class)
+public @interface StringInBase64 {
+    String message() default "br.com.zup.bootcamp.resource.validator.annotation.StringInBase64";
     Class<?>[] groups() default {};
-    Class<? extends Payload>[] payload() default {};
+    Class<? extends Payload>[] payload() default  {};
 }
