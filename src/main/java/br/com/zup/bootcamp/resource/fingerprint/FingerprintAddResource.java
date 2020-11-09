@@ -6,14 +6,17 @@ import br.com.zup.bootcamp.resource.dto.request.FingerprintAddRequest;
 import br.com.zup.bootcamp.usecase.AddFingerprintUseCase;
 import br.com.zup.bootcamp.usecase.ConsultProposalUseCase;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.util.Optional;
 
-// Carga intrínseca = 6/7
+// Carga intrínseca = 7/7
 @RestController
 @RequestMapping(FingerprintAddResource.path)
 public class FingerprintAddResource {
@@ -34,8 +37,14 @@ public class FingerprintAddResource {
      */
     @PostMapping("/{proposalId}")
     public ResponseEntity<?> add(@PathVariable String proposalId, @Valid @RequestBody FingerprintAddRequest request, UriComponentsBuilder builder){
+        String userId = SecurityContextHolder.getContext().getAuthentication().getName();
         Optional<Proposal> proposal = consultProposalUseCase.execute(proposalId);
-        if(proposal.isEmpty() || !proposal.get().haveCard()) return ResponseEntity.notFound().build();
+
+        if(proposal.isEmpty() || !proposal.get().haveCard())
+            return ResponseEntity.notFound().build();
+
+        if(!userId.equals(proposal.get().getId()))
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 
         Fingerprint fingerprint = addFingerprintUseCase.execute(request.toEntity(proposal.get()));
         return ResponseEntity.created(

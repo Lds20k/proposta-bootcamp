@@ -4,6 +4,8 @@ import br.com.zup.bootcamp.entity.Proposal;
 import br.com.zup.bootcamp.gateway.PersistProposalGateway;
 import br.com.zup.bootcamp.gateway.database.model.ProposalDBDomain;
 import br.com.zup.bootcamp.gateway.database.repository.ProposalRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 // Carga intrínseca = 3/7
@@ -11,6 +13,8 @@ import org.springframework.stereotype.Service;
 public class PersistProposalGatewayImpl implements PersistProposalGateway {
 
     private final ProposalRepository repository;
+
+    private final Logger logger = LoggerFactory.getLogger(PersistProposalGatewayImpl.class);
 
     public PersistProposalGatewayImpl(ProposalRepository repository) {
         this.repository = repository;
@@ -32,6 +36,7 @@ public class PersistProposalGatewayImpl implements PersistProposalGateway {
                 proposal.getSalary(),
                 proposal.getEligibility()
         );
+        logger.info("persisting a proposal");
         repository.save(proposalDBDomain);
         return proposalDBDomain.toEntity();
     }

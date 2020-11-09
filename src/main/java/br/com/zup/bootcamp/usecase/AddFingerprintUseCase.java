@@ -5,7 +5,7 @@ import br.com.zup.bootcamp.gateway.PersistFingerprintGateway;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-// Carga intrínseca = 2/7
+// Carga intrínseca = 2/9
 @Service
 public class AddFingerprintUseCase {
 

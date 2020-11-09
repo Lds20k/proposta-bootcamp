@@ -43,8 +43,6 @@ public class AnalyzeResponse {
     @Override
     public String toString() {
         return "AnalyzeResponse{" +
-                "documento='" + documento + '\'' +
-                ", nome='" + nome + '\'' +
                 ", resultadoSolicitacao='" + resultadoSolicitacao + '\'' +
                 ", idProposta='" + idProposta + '\'' +
                 '}';

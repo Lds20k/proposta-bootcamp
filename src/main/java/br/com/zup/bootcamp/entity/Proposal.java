@@ -15,6 +15,7 @@ import java.util.Collection;
 // Carga intrínseca = 0/7
 public class Proposal {
 
+    @NotBlank
     private final String id;
 
     @NotBlank
@@ -42,8 +43,8 @@ public class Proposal {
 
     private final Collection<Fingerprint> fingerprints;
 
-    public Proposal(@NotBlank String document, @NotBlank @Email String email, @NotBlank String name, @NotBlank String address, @NotNull @Positive BigDecimal salary) {
-        this.id = null;
+    public Proposal(@NotBlank String id, @NotBlank String document, @NotBlank @Email String email, @NotBlank String name, @NotBlank String address, @NotNull @Positive BigDecimal salary) {
+        this.id = id;
         this.document = document;
         this.email = email;
         this.name = name;
@@ -54,7 +55,7 @@ public class Proposal {
         this.fingerprints = new ArrayList<>();
     }
 
-    public Proposal(String id, @NotBlank String document, @NotBlank @Email String email, @NotBlank String name, @NotBlank String address, @NotNull @Positive BigDecimal salary, @NotBlank Eligibility eligibility) {
+    public Proposal(@NotBlank String id, @NotBlank String document, @NotBlank @Email String email, @NotBlank String name, @NotBlank String address, @NotNull @Positive BigDecimal salary, @NotBlank Eligibility eligibility) {
         this.id = id;
         this.document = document;
         this.email = email;
@@ -66,7 +67,7 @@ public class Proposal {
         this.fingerprints = new ArrayList<>();
     }
 
-    public Proposal(String id, @NotBlank String document, @NotBlank @Email String email, @NotBlank String name, @NotBlank String address, @NotNull @Positive BigDecimal salary, @NotBlank Eligibility eligibility, String card) {
+    public Proposal(@NotBlank String id, @NotBlank String document, @NotBlank @Email String email, @NotBlank String name, @NotBlank String address, @NotNull @Positive BigDecimal salary, @NotBlank Eligibility eligibility, String card) {
         this.id = id;
         this.document = document;
         this.email = email;

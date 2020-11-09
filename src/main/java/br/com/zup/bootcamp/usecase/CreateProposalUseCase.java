@@ -2,8 +2,9 @@ package br.com.zup.bootcamp.usecase;
 
 import br.com.zup.bootcamp.entity.Proposal;
 import br.com.zup.bootcamp.gateway.AnalyzeGateway;
-import br.com.zup.bootcamp.gateway.ProposalDocumentAllReadyPersistedGateway;
+import br.com.zup.bootcamp.gateway.ProposalDocumentAlreadyPersistedGateway;
 import br.com.zup.bootcamp.gateway.PersistProposalGateway;
+import br.com.zup.bootcamp.gateway.UserHaveProposalGateway;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +21,10 @@ public class CreateProposalUseCase {
     private PersistProposalGateway persistProposalGateway;
 
     @Autowired
-    private ProposalDocumentAllReadyPersistedGateway proposalDocumentAllReadyPersistedGateway;
+    private UserHaveProposalGateway userHaveProposalGateway;
+
+    @Autowired
+    private ProposalDocumentAlreadyPersistedGateway proposalDocumentAlreadyPersistedGateway;
 
     /**
      * Persiste e analisa uma proposta
@@ -28,7 +32,10 @@ public class CreateProposalUseCase {
      * @return Objeto que representa a proposta salva no banco de dados
      */
     public Optional<Proposal> execute(Proposal proposal){
-        if(proposalDocumentAllReadyPersistedGateway.execute(proposal)) return Optional.empty();
+        if(
+                proposalDocumentAlreadyPersistedGateway.execute(proposal) ||
+                userHaveProposalGateway.execute(proposal.getId()).isPresent()
+        ) return Optional.empty();
 
         Proposal processedProposal = persistProposalGateway.execute(proposal);
         Proposal proposalToReturn = persistProposalGateway.execute(analyzeGateway.execute(processedProposal));

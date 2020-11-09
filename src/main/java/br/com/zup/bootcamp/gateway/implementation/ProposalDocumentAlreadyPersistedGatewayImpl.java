@@ -1,7 +1,7 @@
 package br.com.zup.bootcamp.gateway.implementation;
 
 import br.com.zup.bootcamp.entity.Proposal;
-import br.com.zup.bootcamp.gateway.ProposalDocumentAllReadyPersistedGateway;
+import br.com.zup.bootcamp.gateway.ProposalDocumentAlreadyPersistedGateway;
 import br.com.zup.bootcamp.gateway.database.model.ProposalDBDomain;
 import br.com.zup.bootcamp.gateway.database.repository.ProposalRepository;
 import org.slf4j.Logger;
@@ -12,15 +12,16 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class ProposalDocumentAllReadyPersistedGatewayImpl implements ProposalDocumentAllReadyPersistedGateway {
+public class ProposalDocumentAlreadyPersistedGatewayImpl implements ProposalDocumentAlreadyPersistedGateway {
 
     @Autowired
     private ProposalRepository proposalRepository;
 
-    private final Logger logger = LoggerFactory.getLogger(ProposalDocumentAllReadyPersistedGatewayImpl.class);
+    private final Logger logger = LoggerFactory.getLogger(ProposalDocumentAlreadyPersistedGatewayImpl.class);
 
     @Override
     public Boolean execute(Proposal proposal) {
+        logger.info("verify if proposal document was already registered");
         Optional<ProposalDBDomain> proposalDBDomainOptional = proposalRepository.findByDocument(proposal.getDocument());
         return proposalDBDomainOptional.isPresent();
     }

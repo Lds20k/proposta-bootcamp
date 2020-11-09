@@ -34,7 +34,7 @@ public class AnalyzeGatewayImpl implements AnalyzeGateway {
         request.put("nome"      , proposal.getName());
         request.put("idProposta", proposal.getId());
 
-        logger.info("send a request: " + request.toString());
+        logger.info("send a request: " + request.get("idProposta"));
         AnalyzeResponse response;
         try {
             response = analyzeClient.analyzeRestrictions(request).getBody();

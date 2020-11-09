@@ -2,6 +2,7 @@ package br.com.zup.bootcamp.resource.dto.request;
 
 import br.com.zup.bootcamp.entity.Proposal;
 import br.com.zup.bootcamp.resource.validator.annotation.CPFOrCNPJ;
+import org.apache.logging.log4j.util.Strings;
 import org.hibernate.validator.constraints.br.CNPJ;
 import org.hibernate.validator.constraints.br.CPF;
 
@@ -18,12 +19,6 @@ public class ProposalCreateRequest {
     private final String document;
 
     @NotBlank
-    private final String email;
-
-    @NotBlank
-    private final String name;
-
-    @NotBlank
     private final String address;
 
     @NotNull
@@ -32,22 +27,12 @@ public class ProposalCreateRequest {
 
     public ProposalCreateRequest(@NotBlank @CPF @CNPJ String document, @NotBlank String email, @NotBlank String name, @NotBlank String address, @NotNull @Positive BigDecimal salary) {
         this.document = document;
-        this.email = email;
-        this.name = name;
         this.address = address;
         this.salary = salary;
     }
 
     public String getDocument() {
         return document;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public String getAddress() {
@@ -58,7 +43,7 @@ public class ProposalCreateRequest {
         return salary;
     }
 
-    public Proposal toModel() {
-        return new Proposal(this.document, this.email, this.name, this.address, this.salary);
+    public Proposal toModel(String id, String email, String name) {
+        return new Proposal(id, this.document, email, name, this.address, this.salary);
     }
 }

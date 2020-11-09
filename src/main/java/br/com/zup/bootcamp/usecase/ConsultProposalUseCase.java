@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-// Carga intrínseca = 2/7
+// Carga intrínseca = 2/9
 @Service
 public class ConsultProposalUseCase {
 

@@ -20,8 +20,6 @@ import java.util.Collection;
 public class ProposalDBDomain {
 
     @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private String id;
 
     @NotBlank
@@ -29,14 +27,9 @@ public class ProposalDBDomain {
     @Column(nullable = false, unique = true)
     private String document;
 
-    @NotBlank
-    @Email
-    @Column(nullable = false)
-    private String email;
+    private transient String email;
 
-    @NotBlank
-    @Column(nullable = false)
-    private String name;
+    private transient String name;
 
     @NotBlank
     @Column(nullable = false)
@@ -65,7 +58,7 @@ public class ProposalDBDomain {
         this.id = id;
     }
 
-    public ProposalDBDomain(String id, @NotBlank String document, @NotBlank @Email String email, @NotBlank String name, @NotBlank String address, @NotNull @Positive BigDecimal salary, @NotBlank Eligibility eligibility) {
+    public ProposalDBDomain(String id, @NotBlank String document, @NotBlank @Email String email, String name, String address, @NotNull @Positive BigDecimal salary, @NotBlank Eligibility eligibility) {
         this.id = id;
         this.document = document;
         this.email = email;
