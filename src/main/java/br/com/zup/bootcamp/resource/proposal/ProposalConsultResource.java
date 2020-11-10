@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Optional;
 
-// Carga intrínseca = 5/7
+// Carga intrínseca = 6/7
 @RestController
 public class ProposalConsultResource extends ProposalResource {
 

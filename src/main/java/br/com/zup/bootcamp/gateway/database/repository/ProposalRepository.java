@@ -1,6 +1,7 @@
 package br.com.zup.bootcamp.gateway.database.repository;
 
 
+import br.com.zup.bootcamp.entity.Proposal;
 import br.com.zup.bootcamp.enumerate.Eligibility;
 import br.com.zup.bootcamp.gateway.database.model.ProposalDBDomain;
 import org.springframework.data.repository.CrudRepository;
@@ -11,4 +12,6 @@ public interface ProposalRepository extends CrudRepository<ProposalDBDomain, Str
     Optional<ProposalDBDomain> findByDocument(String document);
 
     Iterable<ProposalDBDomain> findAllByEligibilityAndCardIsNull(Eligibility eligibility);
+
+    Optional<ProposalDBDomain> findByCard(String card);
 }

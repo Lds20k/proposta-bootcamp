@@ -68,6 +68,16 @@ public class ProposalDBDomain {
         this.eligibility = eligibility;
     }
 
+    public ProposalDBDomain(Proposal proposal) {
+        this.id = proposal.getId();
+        this.document = proposal.getDocument();
+        this.email = proposal.getEmail();
+        this.name = proposal.getName();
+        this.address = proposal.getAddress();
+        this.salary = proposal.getSalary();
+        this.eligibility = proposal.getEligibility();
+    }
+
     public Proposal toEntity() {
         return new Proposal(
                 this.id,
