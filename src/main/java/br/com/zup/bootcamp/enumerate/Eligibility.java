@@ -4,8 +4,9 @@ public enum Eligibility {
     PENDENTE("PENDENTE"),
     ELEGIVEL("ELEGIVEL"),
     NAO_ELEGIVEL("NAO_ELEGIVEL"),
-    ELEITO("ELEITO");
-
+    ELEITO("ELEITO"),
+    BLOQUEADO("BLOQUEADO"),
+    INDEFINIDO("INDEFINIDO");
 
     Eligibility(String restriction) {
     }

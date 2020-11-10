@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+// Carga intrínseca = 4/7
 @Service
 public class ConsultLockCardGatewayImpl implements ConsultLockCardGateway {
 

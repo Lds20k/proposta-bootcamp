@@ -50,6 +50,9 @@ public class ProposalDBDomain {
     @OneToMany(mappedBy = "proposal", cascade = CascadeType.ALL)
     private Collection<FingerprintDBDomain> fingerprints = new ArrayList<>();
 
+    @OneToOne(mappedBy = "proposal", cascade = CascadeType.ALL)
+    private LockedCardDBDomain lockedCard;
+
     @Deprecated
     public ProposalDBDomain() {
     }
@@ -105,6 +108,10 @@ public class ProposalDBDomain {
 
     public void addFingerPrint(FingerprintDBDomain fingerPrint){
         this.fingerprints.add(fingerPrint);
+    }
+
+    public void setLockedCard(LockedCardDBDomain lockedCard) {
+        this.lockedCard = lockedCard;
     }
 
     @Override
