@@ -19,7 +19,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping(FingerprintAddResource.path)
 public class FingerprintAddResource {
-    public static final String path = "/fingerprints";
+    public static final String path = "/api/fingerprints";
 
     @Autowired
     private AddFingerprintUseCase addFingerprintUseCase;

@@ -20,7 +20,7 @@ import java.util.Optional;
 @RequestMapping(LockCardResource.path)
 public class LockCardResource {
 
-    public static final String path = "/cards";
+    public static final String path = "/api/cards";
 
     @Autowired
     private ConsultProposalByCardUseCase consultProposalByCardUseCase;

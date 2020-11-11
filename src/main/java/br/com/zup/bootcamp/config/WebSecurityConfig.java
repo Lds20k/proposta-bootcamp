@@ -30,11 +30,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests(authorizeRequest -> authorizeRequest
                 .antMatchers(
                         HttpMethod.GET,
-                        ProposalResource.path.concat("/**")
+                        "/actuator/**"
+                ).permitAll()
+
+                .antMatchers(
+                        HttpMethod.GET,
+                        "/api/**"
                 ).hasAuthority("SCOPE_proposta:read")
                 .antMatchers(
                         HttpMethod.POST,
-                        ProposalResource.path.concat("/**")
+                        "/api/**"
                 ).hasAuthority("SCOPE_proposta:write")
                 .anyRequest().authenticated()
         ).oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt);

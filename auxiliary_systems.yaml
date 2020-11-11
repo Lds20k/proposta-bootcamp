@@ -11,3 +11,8 @@ services:
     environment:
       MYSQL_DATABASE: proposta
       MYSQL_ROOT_PASSWORD: password
+
+#  prometheus:
+#    image: prom/prometheus
+#    ports:
+#      - "9190:9190"
