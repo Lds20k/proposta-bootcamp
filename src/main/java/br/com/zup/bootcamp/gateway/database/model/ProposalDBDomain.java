@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 
-// Carga intrínseca = 2/7
+// Carga intrínseca = 3/7
 @Entity
 @Table(name = "proposal")
 public class ProposalDBDomain {
@@ -56,6 +56,9 @@ public class ProposalDBDomain {
 
     @OneToMany(mappedBy = "proposal", cascade = CascadeType.ALL)
     private Collection<PasswordRecoverDBDomain> passwordRecover = new HashSet<>();
+
+    @OneToMany(mappedBy = "proposal", cascade = CascadeType.ALL)
+    private Collection<AdviseTripDBDomain> adviseTrip = new HashSet<>();
 
     @Deprecated
     public ProposalDBDomain() {
@@ -128,5 +131,9 @@ public class ProposalDBDomain {
 
     public void addRecoverPassword(PasswordRecoverDBDomain passwordRecover) {
         this.passwordRecover.add(passwordRecover);
+    }
+
+    public void addAdviseTrip(AdviseTripDBDomain adviseTripDBDomain) {
+        this.adviseTrip.add(adviseTripDBDomain);
     }
 }
