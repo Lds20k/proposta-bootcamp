@@ -1,5 +1,6 @@
 package br.com.zup.bootcamp.client;
 
+import br.com.zup.bootcamp.client.response.AdviseTripResponse;
 import br.com.zup.bootcamp.client.response.CardResponse;
 import br.com.zup.bootcamp.client.response.LockResponse;
 import feign.Headers;
@@ -19,4 +20,8 @@ public interface CardClient {
     @PostMapping("/api/cartoes/{id}/bloqueios")
     @Headers("Content-Type: application/json")
     ResponseEntity<LockResponse> lockCard(@PathVariable(name = "id") String card, @RequestBody Map<String, String> request);
+
+    @PostMapping("/api/cartoes/{id}/avisos")
+    @Headers("Content-Type: application/json")
+    ResponseEntity<AdviseTripResponse> adviseTrip(@PathVariable(name = "id") String card, @RequestBody Map<String, String> request);
 }

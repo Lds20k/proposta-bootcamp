@@ -44,7 +44,7 @@ public class AdviseTripResource {
         if(proposal.isEmpty())
             return ResponseEntity.notFound().build();
 
-        if(!userId.equals(proposal.get().getId()))
+        if(!userId.equals(proposal.get().getId()) || proposal.get().isLocked())
             return ResponseEntity.badRequest().build();
 
         AdviseTrip adviseTripToProcess = new AdviseTrip(
