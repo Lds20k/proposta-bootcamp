@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 
-// Carga intrínseca = 0/7
+// Carga intrínseca = 1/7
 public class Proposal {
 
     @NotBlank
@@ -113,5 +113,9 @@ public class Proposal {
 
     public boolean haveCard() {
         return !Strings.isBlank(this.card);
+    }
+
+    public boolean isLocked() {
+        return eligibility.equals(Eligibility.BLOQUEADO);
     }
 }

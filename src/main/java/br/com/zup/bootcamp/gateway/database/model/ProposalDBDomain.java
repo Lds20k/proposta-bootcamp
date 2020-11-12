@@ -13,6 +13,7 @@ import javax.validation.constraints.Positive;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 
 // Carga intrínseca = 2/7
 @Entity
@@ -53,6 +54,9 @@ public class ProposalDBDomain {
     @OneToOne(mappedBy = "proposal", cascade = CascadeType.ALL)
     private LockedCardDBDomain lockedCard;
 
+    @OneToMany(mappedBy = "proposal", cascade = CascadeType.ALL)
+    private Collection<PasswordRecoverDBDomain> passwordRecover = new HashSet<>();
+
     @Deprecated
     public ProposalDBDomain() {
     }
@@ -79,6 +83,7 @@ public class ProposalDBDomain {
         this.address = proposal.getAddress();
         this.salary = proposal.getSalary();
         this.eligibility = proposal.getEligibility();
+        this.card = proposal.getCard();
     }
 
     public Proposal toEntity() {
@@ -119,5 +124,9 @@ public class ProposalDBDomain {
         return "ProposalDBDomain{" +
                 "id='" + id + '\'' +
                 '}';
+    }
+
+    public void addRecoverPassword(PasswordRecoverDBDomain passwordRecover) {
+        this.passwordRecover.add(passwordRecover);
     }
 }

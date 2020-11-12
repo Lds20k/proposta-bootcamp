@@ -2,6 +2,7 @@ package br.com.zup.bootcamp.entity;
 
 import java.time.LocalDateTime;
 
+// Carga intrínseca = 1/7
 public class LockedCard {
 
     private final String id;

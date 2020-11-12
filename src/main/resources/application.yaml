@@ -6,7 +6,7 @@ spring:
     url: ${DB_URL:jdbc:mysql://localhost:3306/proposta}
 
   jpa:
-    show-sql: true
+    show-sql: false
 
     hibernate:
       ddl-auto: update
@@ -25,7 +25,9 @@ analise:
 cartao:
   url: ${CARTAO_URL:http://localhost:8888}
 
-
+feign:
+  hystrix:
+    enabled: true
 
 period:
   execute: ${PERIOD:1000}
