@@ -1,6 +1,7 @@
 package br.com.zup.bootcamp.gateway.database.model;
 
 import br.com.zup.bootcamp.entity.Proposal;
+import br.com.zup.bootcamp.entity.Wallet;
 import br.com.zup.bootcamp.enumerate.Eligibility;
 import br.com.zup.bootcamp.resource.validator.annotation.CPFOrCNPJ;
 import org.hibernate.annotations.GenericGenerator;
@@ -14,6 +15,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Optional;
 
 // Carga intrínseca = 3/7
 @Entity
@@ -59,6 +61,9 @@ public class ProposalDBDomain {
 
     @OneToMany(mappedBy = "proposal", cascade = CascadeType.ALL)
     private Collection<AdviseTripDBDomain> adviseTrip = new HashSet<>();
+
+    @OneToOne(mappedBy = "proposal", cascade = CascadeType.ALL)
+    private WalletDBDomain wallet;
 
     @Deprecated
     public ProposalDBDomain() {

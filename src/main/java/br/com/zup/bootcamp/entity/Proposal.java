@@ -79,6 +79,18 @@ public class Proposal {
         this.fingerprints = new ArrayList<>();
     }
 
+    public Proposal(Proposal proposal, String email) {
+        this.id = proposal.getId();
+        this.document = proposal.getDocument();
+        this.email = email;
+        this.name = proposal.getName();
+        this.address = proposal.getAddress();
+        this.salary = proposal.getSalary();
+        this.eligibility = proposal.getEligibility();
+        this.card = proposal.getCard();
+        this.fingerprints = new ArrayList<>();
+    }
+
     public String getId() {
         return id;
     }
