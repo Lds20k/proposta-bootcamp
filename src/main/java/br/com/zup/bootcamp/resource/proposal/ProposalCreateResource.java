@@ -3,6 +3,8 @@ package br.com.zup.bootcamp.resource.proposal;
 import br.com.zup.bootcamp.entity.Proposal;
 import br.com.zup.bootcamp.resource.dto.request.ProposalCreateRequest;
 import br.com.zup.bootcamp.usecase.CreateProposalUseCase;
+import io.opentracing.Span;
+import io.opentracing.Tracer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,6 +25,9 @@ public class ProposalCreateResource extends ProposalResource {
     @Autowired
     private CreateProposalUseCase createProposalUseCase;
 
+    @Autowired
+    private Tracer tracer;
+
     /**
      * Endpoint para criação de proposta
      * @param request Corpo da requisição com os atributos da proposta
@@ -36,6 +41,8 @@ public class ProposalCreateResource extends ProposalResource {
                     .getAuthentication()
                     .getPrincipal()
         ).getClaims();
+        Span activeSpan = tracer.activeSpan();
+        activeSpan.setTag("user.id", user.get("sub").toString());
 
         Proposal proposalToProcess = request.toModel(
                 user.get("sub").toString(),

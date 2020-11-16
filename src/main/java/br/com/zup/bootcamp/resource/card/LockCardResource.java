@@ -5,6 +5,8 @@ import br.com.zup.bootcamp.entity.Proposal;
 import br.com.zup.bootcamp.usecase.ConsultLockCardUseCase;
 import br.com.zup.bootcamp.usecase.ConsultProposalByCardUseCase;
 import br.com.zup.bootcamp.usecase.LockCardUseCase;
+import io.opentracing.Span;
+import io.opentracing.Tracer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +30,9 @@ public class LockCardResource extends CardResource{
     @Autowired
     private ConsultLockCardUseCase consultLockCardUseCase;
 
+    @Autowired
+    private Tracer tracer;
+
     /**
      * Bloqueia um cartão
      * @param card String do identificador do cartão
@@ -37,7 +42,9 @@ public class LockCardResource extends CardResource{
      */
     @PostMapping("/{card}/locks")
     public ResponseEntity<?> lock(@PathVariable String card, HttpServletRequest request, UriComponentsBuilder builder){
+        Span activeSpan = tracer.activeSpan();
         String userId = SecurityContextHolder.getContext().getAuthentication().getName();
+        activeSpan.setTag("user.id", userId);
         Optional<Proposal> proposal = consultProposalByCardUseCase.execute(card);
 
         if(proposal.isEmpty())

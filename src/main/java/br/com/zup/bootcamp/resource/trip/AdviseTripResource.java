@@ -5,6 +5,8 @@ import br.com.zup.bootcamp.entity.Proposal;
 import br.com.zup.bootcamp.resource.dto.request.AdviseTripRequest;
 import br.com.zup.bootcamp.usecase.AdviceTripUseCase;
 import br.com.zup.bootcamp.usecase.ConsultProposalByCardUseCase;
+import io.opentracing.Span;
+import io.opentracing.Tracer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -28,6 +30,9 @@ public class AdviseTripResource {
     @Autowired
     private AdviceTripUseCase adviceTripUseCase;
 
+    @Autowired
+    private Tracer tracer;
+
     /**
      * Cria um aviso de viagem
      * @param card String identificadora do cartão
@@ -38,7 +43,9 @@ public class AdviseTripResource {
      */
     @PostMapping("/{card}")
     public ResponseEntity<?> advice(@PathVariable String card, @Valid @RequestBody AdviseTripRequest request, HttpServletRequest requestInfo, UriComponentsBuilder builder){
+        Span activeSpan = tracer.activeSpan();
         String userId = SecurityContextHolder.getContext().getAuthentication().getName();
+        activeSpan.setTag("user.id", userId);
         Optional<Proposal> proposal = proposalByCardUseCase.execute(card);
 
         if(proposal.isEmpty())

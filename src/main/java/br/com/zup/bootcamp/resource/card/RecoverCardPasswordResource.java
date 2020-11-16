@@ -5,6 +5,8 @@ import br.com.zup.bootcamp.entity.Proposal;
 import br.com.zup.bootcamp.usecase.ConsultLockCardUseCase;
 import br.com.zup.bootcamp.usecase.ConsultProposalByCardUseCase;
 import br.com.zup.bootcamp.usecase.RecoverCardPasswordUseCase;
+import io.opentracing.Span;
+import io.opentracing.Tracer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
@@ -28,6 +30,9 @@ public class RecoverCardPasswordResource extends CardResource {
     @Autowired
     private ConsultProposalByCardUseCase consultProposalByCardUseCase;
 
+    @Autowired
+    private Tracer tracer;
+
     /**
      * Requisição para recuperar senha do cartão
      * @param card String identificadora do cartão
@@ -37,7 +42,9 @@ public class RecoverCardPasswordResource extends CardResource {
      */
     @PostMapping("/{card}/passwords")
     public ResponseEntity<?> recover(@PathVariable String card, HttpServletRequest request, UriComponentsBuilder builder){
+        Span activeSpan = tracer.activeSpan();
         String userId = SecurityContextHolder.getContext().getAuthentication().getName();
+        activeSpan.setTag("user.id", userId);
         Optional<Proposal> proposal = consultProposalByCardUseCase.execute(card);
 
         if(proposal.isEmpty())

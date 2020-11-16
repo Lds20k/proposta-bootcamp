@@ -3,6 +3,8 @@ package br.com.zup.bootcamp.resource.proposal;
 import br.com.zup.bootcamp.entity.Proposal;
 import br.com.zup.bootcamp.resource.dto.response.ProposalResponse;
 import br.com.zup.bootcamp.usecase.ConsultProposalUseCase;
+import io.opentracing.Span;
+import io.opentracing.Tracer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +22,9 @@ public class ProposalConsultResource extends ProposalResource {
     @Autowired
     private ConsultProposalUseCase consultProposalUseCase;
 
+    @Autowired
+    private Tracer tracer;
+
     /**
      * Endpoint que consulta uma proposta que esta persistida pelo id
      * @param id String do UUID da proposta
@@ -27,7 +32,9 @@ public class ProposalConsultResource extends ProposalResource {
      */
     @GetMapping("/{id}")
     public ResponseEntity<?> consult(@PathVariable String id){
+        Span activeSpan = tracer.activeSpan();
         String userId = SecurityContextHolder.getContext().getAuthentication().getName();
+        activeSpan.setTag("user.id", userId);
         Optional<Proposal> proposal = consultProposalUseCase.execute(id);
 
         if(proposal.isEmpty()) return ResponseEntity.notFound().build();

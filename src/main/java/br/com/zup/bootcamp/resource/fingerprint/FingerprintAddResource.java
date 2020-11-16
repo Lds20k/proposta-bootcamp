@@ -5,6 +5,8 @@ import br.com.zup.bootcamp.entity.Proposal;
 import br.com.zup.bootcamp.resource.dto.request.FingerprintAddRequest;
 import br.com.zup.bootcamp.usecase.AddFingerprintUseCase;
 import br.com.zup.bootcamp.usecase.ConsultProposalUseCase;
+import io.opentracing.Span;
+import io.opentracing.Tracer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +29,9 @@ public class FingerprintAddResource {
     @Autowired
     private ConsultProposalUseCase consultProposalUseCase;
 
+    @Autowired
+    private Tracer tracer;
+
     /**
      * Adiciona uma impressão digital a uma proposta
      * @param proposalId String UUID da proposta
@@ -36,7 +41,9 @@ public class FingerprintAddResource {
      */
     @PostMapping("/{proposalId}")
     public ResponseEntity<?> add(@PathVariable String proposalId, @Valid @RequestBody FingerprintAddRequest request, UriComponentsBuilder builder){
+        Span activeSpan = tracer.activeSpan();
         String userId = SecurityContextHolder.getContext().getAuthentication().getName();
+        activeSpan.setTag("user.id", userId);
         Optional<Proposal> proposal = consultProposalUseCase.execute(proposalId);
 
         if(proposal.isEmpty() || !proposal.get().haveCard())

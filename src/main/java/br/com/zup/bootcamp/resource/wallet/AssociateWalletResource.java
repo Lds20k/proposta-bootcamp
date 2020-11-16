@@ -5,6 +5,8 @@ import br.com.zup.bootcamp.entity.Wallet;
 import br.com.zup.bootcamp.usecase.AssociateWalletUseCase;
 import br.com.zup.bootcamp.usecase.ConsultProposalByCardUseCase;
 import br.com.zup.bootcamp.usecase.HaveWalletUseCase;
+import io.opentracing.Span;
+import io.opentracing.Tracer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -34,6 +36,9 @@ public class AssociateWalletResource {
     @Autowired
     private HaveWalletUseCase haveWalletUseCase;
 
+    @Autowired
+    private Tracer tracer;
+
     /**
      * Associa uma companhia/carteira a um cartão
      * @param company Companhia/Carteira que sera associada ao cartão
@@ -48,6 +53,8 @@ public class AssociateWalletResource {
                 .getAuthentication()
                 .getPrincipal()
         ).getClaims();
+        Span activeSpan = tracer.activeSpan();
+        activeSpan.setTag("user.id", user.get("sub").toString());
 
         Optional<Proposal> proposalFromDB = consultProposalByCardUseCase.execute(card);
 
