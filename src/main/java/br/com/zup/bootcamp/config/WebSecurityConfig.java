@@ -1,6 +1,7 @@
 package br.com.zup.bootcamp.config;
 
 import br.com.zup.bootcamp.resource.proposal.ProposalResource;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -9,6 +10,8 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 // Configurado apenas para aceitar request sem autorização
 @Configuration
@@ -43,5 +46,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 ).hasAuthority("SCOPE_proposta:write")
                 .anyRequest().authenticated()
         ).oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt);
+    }
+
+    @Bean
+    public PasswordEncoder encoder(){
+        return new BCryptPasswordEncoder();
     }
 }

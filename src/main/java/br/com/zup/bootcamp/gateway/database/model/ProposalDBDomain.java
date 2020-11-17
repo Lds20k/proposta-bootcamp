@@ -1,10 +1,8 @@
 package br.com.zup.bootcamp.gateway.database.model;
 
 import br.com.zup.bootcamp.entity.Proposal;
-import br.com.zup.bootcamp.entity.Wallet;
 import br.com.zup.bootcamp.enumerate.Eligibility;
 import br.com.zup.bootcamp.resource.validator.annotation.CPFOrCNPJ;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -15,7 +13,6 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Optional;
 
 // Carga intrínseca = 3/7
 @Entity
@@ -26,9 +23,12 @@ public class ProposalDBDomain {
     private String id;
 
     @NotBlank
-    @CPFOrCNPJ
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true, updatable = false)
     private String document;
+
+    @NotBlank
+    @Column(nullable = false, unique = true, updatable = false)
+    private String hashDocument;
 
     private transient String email;
 
@@ -73,9 +73,10 @@ public class ProposalDBDomain {
         this.id = id;
     }
 
-    public ProposalDBDomain(String id, @NotBlank String document, @NotBlank @Email String email, String name, String address, @NotNull @Positive BigDecimal salary, @NotBlank Eligibility eligibility) {
+    public ProposalDBDomain(String id, @NotBlank String document, @NotBlank String hashDocument, @NotBlank @Email String email, String name, String address, @NotNull @Positive BigDecimal salary, @NotBlank Eligibility eligibility) {
         this.id = id;
         this.document = document;
+        this.hashDocument = hashDocument;
         this.email = email;
         this.name = name;
         this.address = address;

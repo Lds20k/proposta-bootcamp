@@ -4,8 +4,11 @@ import br.com.zup.bootcamp.entity.Proposal;
 import br.com.zup.bootcamp.gateway.PersistProposalGateway;
 import br.com.zup.bootcamp.gateway.database.model.ProposalDBDomain;
 import br.com.zup.bootcamp.gateway.database.repository.ProposalRepository;
+import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.tomcat.util.codec.binary.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 // Carga intrínseca = 3/7
@@ -14,10 +17,13 @@ public class PersistProposalGatewayImpl implements PersistProposalGateway {
 
     private final ProposalRepository repository;
 
+    private final PasswordEncoder encoder;
+
     private final Logger logger = LoggerFactory.getLogger(PersistProposalGatewayImpl.class);
 
-    public PersistProposalGatewayImpl(ProposalRepository repository) {
+    public PersistProposalGatewayImpl(ProposalRepository repository, PasswordEncoder encoder) {
         this.repository = repository;
+        this.encoder = encoder;
     }
 
     /**
@@ -29,7 +35,8 @@ public class PersistProposalGatewayImpl implements PersistProposalGateway {
     public Proposal execute(Proposal proposal) {
         ProposalDBDomain proposalDBDomain = new ProposalDBDomain(
                 proposal.getId(),
-                proposal.getDocument(),
+                encoder.encode(proposal.getDocument()),
+                DigestUtils.sha256Hex(proposal.getDocument()),
                 proposal.getEmail(),
                 proposal.getName(),
                 proposal.getAddress(),

@@ -9,7 +9,7 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.Optional;
 
 public interface ProposalRepository extends CrudRepository<ProposalDBDomain, String> {
-    Optional<ProposalDBDomain> findByDocument(String document);
+    Optional<ProposalDBDomain> findByHashDocument(String hashDocument);
 
     Iterable<ProposalDBDomain> findAllByEligibilityAndCardIsNull(Eligibility eligibility);
 

@@ -1,8 +1,9 @@
-package br.com.zup.bootcamp.gateway;
+package br.com.zup.bootcamp.gateway.implementation;
 
 import br.com.zup.bootcamp.client.CardClient;
 import br.com.zup.bootcamp.client.response.AssociateWalletResponse;
 import br.com.zup.bootcamp.entity.Wallet;
+import br.com.zup.bootcamp.gateway.PersistWalletGateway;
 import br.com.zup.bootcamp.gateway.database.model.WalletDBDomain;
 import br.com.zup.bootcamp.gateway.database.repository.WalletRepository;
 import org.springframework.beans.factory.annotation.Autowired;
